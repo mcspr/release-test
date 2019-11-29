@@ -1,0 +1,11 @@
+language: bash
+script:
+- echo "$TRAVIS_COMMIT" | tee payload.txt
+- cat payload.txt
+deploy:
+  provider: releases
+  api_key: ${GITHUB_TOKEN}
+  file: payload.txt
+  on:
+    tags: true
+    repo: mcspr/release-test
