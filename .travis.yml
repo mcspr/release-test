@@ -5,7 +5,7 @@ script:
 deploy:
   provider: releases
   api_key: ${GITHUB_TOKEN}
-  file: payload.txt
+  files: payload.txt
   on:
     tags: true
     repo: mcspr/release-test
