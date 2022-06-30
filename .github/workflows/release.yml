@@ -38,6 +38,6 @@ jobs:
       env:
         GITHUB_TAG: ${{ steps.prepare.outputs.tag }}
       run: |
-        tree
+        tree -h
         cat README.md
         echo "Down here tag is ${GITHUB_TAG}"
