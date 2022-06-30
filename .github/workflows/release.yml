@@ -4,9 +4,32 @@ on:
       - published
       
 jobs:
-  hello-there:
-    name: "hello there"
+  stuff:
+    name: Doing stuff
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
-    - run: |
-        echo ${{ github.ref }}
+    - name: Prepare
+      id: prepare
+      run: |
+        tag=""
+        [[ "${GITHUB_REF}" =~ refs/tags/ ]] && {
+          tag=$(echo "${GITHUB_REF}" | cut -c11-)
+          echo "::set-output name=tag::${tag}"
+        }
+        test -n $tag
+    - name: Fetch some file
+      env:
+        GITHUB_REPO: ${{ github.repo }}
+        GITHUB_TOKEN: ${{ github.GITHUB_TOKEN }}
+      run: |
+        curl -f -H "Authorization: token ${GITHUB_TOKEN}" \
+             -o README.md \
+             "https://api.github.com/repos/${GITHUB_REPO}/README.md?ref=${tag}"
+    - name: Show what we got
+      run: |
+           tree
+           cat README.md
+           echo "tag is \"${{ steps.prepare.tag }}\""
