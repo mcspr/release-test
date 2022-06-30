@@ -23,10 +23,12 @@ jobs:
         echo "Tag is $tag"
     - name: Fetch some file
       env:
-        GITHUB_TAG: ${{ steps.prepare.tag }}
+        GITHUB_TAG: ${{ steps.prepare.outputs.tag }}
         GITHUB_REPO: ${{ github.repository }}
         GITHUB_TOKEN: ${{ github.token }}
       run: |
+        test -n "$GITHUB_TAG"
+        test -n "$GITHUB_REPO"
         curl --fail \
              --header "Accept: application/vnd.github.v3+json" \
              --header "Authorization: token ${GITHUB_TOKEN}" \
@@ -34,7 +36,7 @@ jobs:
           | jq -r '.contents' | base64 -d > README.md 
     - name: Show what we got
       env:
-        GITHUB_TAG: ${{ steps.prepare.tag }}
+        GITHUB_TAG: ${{ steps.prepare.outputs.tag }}
       run: |
         tree
         cat README.md
