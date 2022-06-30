@@ -3,6 +3,9 @@ on:
     types:
       - published
 
+permissions:
+  contents: read
+
 jobs:
   stuff:
     name: Doing stuff
@@ -29,11 +32,11 @@ jobs:
       run: |
         test -n "$GITHUB_TAG"
         test -n "$GITHUB_REPO"
-        curl --fail \
-             --header "Accept: application/vnd.github.v3+json" \
+        curl --silent --fail \
+             --header "Accept: application/vnd.github.v3.raw" \
              --header "Authorization: token ${GITHUB_TOKEN}" \
-             "https://api.github.com/repos/${GITHUB_REPO}/contents/README.md?ref=${GITHUB_TAG}" \
-          | jq -e -r '.content' | base64 -d > README.md
+             --output README.md \
+             "https://api.github.com/repos/${GITHUB_REPO}/contents/README.md?ref=${GITHUB_TAG}"
     - name: Show what we got
       env:
         GITHUB_TAG: ${{ steps.prepare.outputs.tag }}
