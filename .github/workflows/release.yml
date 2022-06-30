@@ -2,7 +2,7 @@ on:
   release:
     types:
       - published
-      
+
 jobs:
   stuff:
     name: Doing stuff
@@ -33,7 +33,7 @@ jobs:
              --header "Accept: application/vnd.github.v3+json" \
              --header "Authorization: token ${GITHUB_TOKEN}" \
              "https://api.github.com/repos/${GITHUB_REPO}/contents/README.md?ref=${GITHUB_TAG}" \
-          | jq -r '.contents' | base64 -d > README.md 
+          | jq -e -r '.content' | base64 -d > README.md
     - name: Show what we got
       env:
         GITHUB_TAG: ${{ steps.prepare.outputs.tag }}
