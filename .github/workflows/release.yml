@@ -8,5 +8,5 @@ jobs:
     name: "hello there"
     runs-on: ubuntu-latest
     steps:
-      - run: |
+    - run: |
         echo ${{ github.ref }}
