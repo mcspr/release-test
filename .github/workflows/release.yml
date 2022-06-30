@@ -28,7 +28,7 @@ jobs:
         curl --fail \
              --header "Accept: application/vnd.github.v3+json" \
              --header "Authorization: token ${GITHUB_TOKEN}" \
-             "https://api.github.com/repos/${GITHUB_REPO}/README.md?ref=${tag}" \
+             "https://api.github.com/repos/${GITHUB_REPO}/contents/README.md?ref=${tag}" \
           | jq -r '.contents' | base64 -d > README.md 
     - name: Show what we got
       run: |
