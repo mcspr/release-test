@@ -1,0 +1,12 @@
+on:
+  release:
+    types:
+      - published
+      
+jobs:
+  hello-there:
+    name: "hello there"
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+        echo ${{ github.ref }}
