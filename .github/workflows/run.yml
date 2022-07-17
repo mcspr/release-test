@@ -8,10 +8,13 @@ jobs:
     steps:
     - name: Prepare
       run: |
-        env
+        echo '# Very first header' >> $GITHUB_STEP_SUMMARY
+        env >> $GITHUB_STEP_SUMMARY
     - name: Do
       run: |
-        echo "# This is a header" >> $GITHUB_STEP_SUMMARY
-        echo "```cpp" >> $GITHUB_STEP_SUMMARY
-        echo "void this_is_a_code_block();" >> $GITHUB_STEP_SUMMARY
-        echo "```" >> $GITHUB_STEP_SUMMARY
+        echo '# This is a header' >> $GITHUB_STEP_SUMMARY
+        echo '```cpp'>> $GITHUB_STEP_SUMMARY
+        echo 'void this_is_a_code_block();' >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        echo '# Another header' >> $GITHUB_STEP_SUMMARY
+        echo 'text text text' >> $GITHUB_STEP_SUMMARY
